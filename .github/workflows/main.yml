@@ -1,0 +1,23 @@
+name: Build Marlin
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install PlatformIO
+      run: pip install platformio
+    - name: Build Marlin
+      run: pio run
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: firmware
+        path: .pio/build/*
